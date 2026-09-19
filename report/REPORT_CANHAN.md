@@ -4,7 +4,7 @@
 
 **MSSV:** 2A202602994
 
-**Nhóm:** Chờ nhóm xác nhận
+**Nhóm:** Top1Server
 
 **Ngày:** 19/09/2026
 
@@ -130,19 +130,23 @@ Cặp 2 và cặp 4 tương đồng rõ về ngữ nghĩa nhưng lại nhận sc
 
 ## 5. Kết quả truy xuất của tôi (Competition Results) — Cá nhân (10 điểm)
 
-Phần này sẽ được cập nhật sau khi nhóm thống nhất corpus, đúng 5 benchmark query, gold answer và chiến lược riêng của từng thành viên. Không sử dụng dữ liệu mẫu `example.edu` để tạo kết quả giả.
+Chiến lược được phân công của tôi là `RecursiveChunker(chunk_size=500)`. Tôi dùng chung 8 tài liệu, 5 query, gold answer, `top_k=3` và embedding đa ngữ `paraphrase-multilingual-MiniLM-L12-v2` với cả nhóm để việc so sánh công bằng. Quy tắc chấm là 2 điểm nếu context top-3 chứa đủ các dữ kiện bắt buộc, 1 điểm nếu chỉ chứa một phần và 0 điểm nếu không đủ thông tin trả lời.
 
-| # | Câu hỏi (Query) | Top-1 Chunk truy xuất được | Score | Liên quan? | Câu trả lời Agent |
-|---|---|---|---:|---|---|
-| 1 | Chờ bộ câu hỏi chung của nhóm | — | — | — | — |
-| 2 | Chờ bộ câu hỏi chung của nhóm | — | — | — | — |
-| 3 | Chờ bộ câu hỏi chung của nhóm | — | — | — | — |
-| 4 | Chờ bộ câu hỏi chung của nhóm | — | — | — | — |
-| 5 | Chờ bộ câu hỏi chung của nhóm | — | — | — | — |
+| # | Câu hỏi (Query) | Kết quả RecursiveChunker | Điểm | Nhận xét |
+|---|---|---|---:|---|
+| 1 | Sinh viên được mượn tối đa bao nhiêu tài liệu và trong bao nhiêu ngày? | Context có đúng bảng “Sinh viên, học viên — 3 — 10”; dùng `metadata_filter={"audience": "student"}` | 2 / 2 | Đây là câu bẫy metadata vì tài liệu giảng viên có hạn mức khác |
+| 2 | Điều kiện nào để được mượn tài liệu về nhà? | Truy xuất đúng tài liệu nhưng chunk chưa giữ đủ dữ kiện 25/35, thẻ và tiền cược trong cùng context | 0 / 2 | Failure case do ranh giới chunk tách mất dữ kiện cần thiết |
+| 3 | Quy trình đăng ký phòng học nhóm và quy định đến trễ? | Context giữ được quy trình đặt phòng và mốc hủy sau 15 phút | 2 / 2 | Recursive split phù hợp với danh sách nhiều bước |
+| 4 | Hạn mức, thời hạn và phí trễ mượn liên thư viện? | Context chứa đủ 2 tài liệu, 20 ngày và 5.000 đồng/tài liệu/ngày | 2 / 2 | Các con số nằm gần nhau trong một mục ngắn |
+| 5 | Lệ phí và thời gian cấp thẻ thư viện? | Context chứa đủ 100.000 đồng/thẻ và 07 ngày kể từ ngày đăng ký | 2 / 2 | Bảng phí và thời gian vẫn nằm trong top-3 context |
 
-**Số câu có chunk liên quan trong top-3:** Chờ benchmark nhóm.
+**Kết quả theo bảng tổng hợp nhóm:** **8 / 10**. `RecursiveChunker` là chiến lược có tổng điểm cao nhất trong bốn chiến lược của nhóm trên bộ query hiện tại.
 
-**Điều học được từ thành viên khác/nhóm khác:** Chờ phần demo và so sánh chiến lược.
+**Lưu ý về khả năng tái lập:** Bảng nhóm ghi lần chạy LocalEmbedder tạo 83 chunk, trong khi phiên bản code hiện tại tạo 76 chunk khi kiểm tra cấu trúc. Vì số chunk không phụ thuộc embedding backend, nhóm cần chạy lại lệnh `python bench.py --strategy recursive` và lưu nguyên output vào `ket_qua_benchmark_recursive.txt` trước khi nộp để xác nhận số liệu cuối cùng. Tôi không dùng kết quả MockEmbedder 0/10 để đánh giá chất lượng semantic vì backend này chỉ phục vụ unit test.
+
+**Phân tích failure case:** Câu 2 cho thấy truy xuất đúng `doc_id` chưa đủ để coi là trả lời đúng. Các điều kiện “25/35”, thẻ thư viện và tiền cược phải cùng xuất hiện trong context; RecursiveChunker có thể tách chúng qua ranh giới đoạn. Cách cải thiện là gắn heading cha vào mỗi chunk con, thêm overlap có kiểm soát hoặc dùng chiến lược hybrid heading + recursive.
+
+**Điều học được từ nhóm:** `HeadingChunker` tốt ở câu tra quy định theo mục, còn overlap của `FixedSizeChunker` hữu ích khi dữ kiện nằm sát ranh giới. Nếu làm lại, tôi vẫn dùng recursive làm fallback nhưng sẽ giữ heading hiện tại trong metadata và nội dung từng chunk, sau đó đo lại trên cùng LocalEmbedder thay vì chọn chiến lược chỉ dựa vào trực giác.
 
 ---
 
@@ -154,5 +158,15 @@ Phần này sẽ được cập nhật sau khi nhóm thống nhất corpus, đú
 | Hướng tiếp cận | 10 / 10 |
 | Hoàn thiện code | 30 / 30 |
 | Dự đoán độ tương tự | 5 / 5 |
-| Kết quả truy xuất cá nhân | Chờ benchmark / 10 |
-| **Tổng hiện tại** | **50 / 60** |
+| Kết quả truy xuất cá nhân | 8 / 10 theo bảng tổng hợp nhóm; cần lưu raw output Recursive để khóa bằng chứng |
+| **Tổng hiện tại** | **58 / 60** |
+
+## Checklist cá nhân trước khi nộp
+
+- [x] Điền đầy đủ thông tin cá nhân, nhóm và vai trò R2 Benchmark.
+- [x] Giải thích cosine similarity, chunking và ba thành phần code chính.
+- [x] Chạy và ghi nhận 42/42 unit tests.
+- [x] Chuẩn bị 5 query, gold answer và đánh dấu câu bẫy metadata.
+- [x] Phân tích ít nhất một failure case và đề xuất cải tiến.
+- [ ] Chạy lại LocalEmbedder cho `RecursiveChunker` trên code hiện tại và lưu `ket_qua_benchmark_recursive.txt`.
+- [ ] Đối chiếu lại số chunk 76/83 rồi thống nhất con số ở cả báo cáo cá nhân và báo cáo nhóm.

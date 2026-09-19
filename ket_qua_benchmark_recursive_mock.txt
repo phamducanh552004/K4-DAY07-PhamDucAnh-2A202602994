@@ -1,0 +1,106 @@
+LAB 07 - BENCHMARK CÁ NHÂN
+Họ tên: Phạm Đức Anh - 2A202602994
+Vai trò: R2 Benchmark
+Chiến lược: RecursiveChunker(chunk_size=500)
+Embedding backend: MockEmbedder (không biểu diễn ngữ nghĩa)
+Corpus: 8 tài liệu, 76 chunks
+
+THỐNG KÊ CHUNK
+- han-muc-muon-tai-lieu-giang-vien: count=3, avg_length=444.00
+- han-muc-muon-tai-lieu-sinh-vien: count=5, avg_length=378.80
+- huong-dan-su-dung-thu-vien: count=14, avg_length=351.29
+- luu-hanh-tai-lieu: count=9, avg_length=339.78
+- muon-lien-thu-vien: count=6, avg_length=366.33
+- muon-tra-sach-tu-dong: count=3, avg_length=359.67
+- quy-dinh-su-dung-thu-vien: count=31, avg_length=359.55
+- su-dung-phong-hoc-nhom: count=5, avg_length=347.80
+
+KẾT QUẢ 5 BENCHMARK QUERY
+
+========================================================================
+Q1: Được mượn tối đa bao nhiêu tài liệu và trong bao nhiêu ngày?
+Gold answer: Đối với sinh viên, học viên: tối đa 3 tài liệu trong 10 ngày.
+Gold document: han-muc-muon-tai-lieu-sinh-vien
+
+[KHÔNG FILTER]
+  Top-1: doc_id=quy-dinh-su-dung-thu-vien chunk=10 score=0.246381
+         - Tài nguyên thông tin của Thư viện là các tài liệu dạng in, dạng số và dạng điện tử được phục vụ tại Thư viện và trên Cổng thông tin Thư viện. - Người sử dụng có quyền truy cập và
+  Top-2: doc_id=quy-dinh-su-dung-thu-vien chunk=28 score=0.238742
+         - Người sử dụng được phép in ấn 01 bài trong tạp chí, hoặc 5% của 01 chương, hoặc 10% nội dung của 01 cuốn sách, báo cáo khoa học, khóa luận, luận văn, luận án, nhưng không vượt qu
+  Top-3: doc_id=han-muc-muon-tai-lieu-sinh-vien chunk=1 score=0.234777
+         Người sử dụng có thể gia hạn tài liệu tại Quầy thông tin hoặc qua website Thư viện Trường Đại học Công Thương TP.HCM, chọn mục Gia hạn tài liệu.
+
+[CÓ FILTER] {'audience': 'student'}
+  Top-1: doc_id=han-muc-muon-tai-lieu-sinh-vien chunk=1 score=0.234777
+         Người sử dụng có thể gia hạn tài liệu tại Quầy thông tin hoặc qua website Thư viện Trường Đại học Công Thương TP.HCM, chọn mục Gia hạn tài liệu.
+  Top-2: doc_id=huong-dan-su-dung-thu-vien chunk=11 score=0.160855
+         | Tầng 4 (443 m²) | 7:00 – 16:30 | Không gian học tập chung (129 chỗ ngồi); phòng đọc nghiên cứu dành cho giảng viên, cán bộ viên chức (12 chỗ ngồi); tài liệu học ngôn ngữ; kho tài
+  Top-3: doc_id=huong-dan-su-dung-thu-vien chunk=5 score=0.123872
+         1. Điền thông tin vào Phiếu đăng ký làm thẻ thư viện. 2. Nộp lệ phí làm thẻ theo quy định. 3. Tham dự lớp tập huấn hướng dẫn sử dụng thư viện và hoàn thành bài kiểm tra kết thúc lớ
+
+Đánh giá kết quả dùng để chấm: gold_rank=1, required_terms_present=False, points=0/2
+
+========================================================================
+Q2: Người sử dụng cần đáp ứng những điều kiện nào để được mượn tài liệu về nhà?
+Gold answer: Phải hoàn thành bài kiểm tra hướng dẫn sử dụng thư viện đạt 25/35 câu, đăng ký thẻ thư viện và đóng tiền thế chân theo quy định.
+Gold document: luu-hanh-tai-lieu
+
+[KHÔNG FILTER]
+  Top-1: doc_id=quy-dinh-su-dung-thu-vien chunk=30 score=0.267164
+         - Đối với học sinh, sinh viên và học viên: các khoản tiền phạt nộp trực tiếp tại Quầy thông tin hoặc trừ trực tiếp vào tài khoản thế chân. Trường hợp tài liệu trễ hạn quá 30 ngày, 
+  Top-2: doc_id=huong-dan-su-dung-thu-vien chunk=13 score=0.222320
+         - Tên đơn vị: Trung tâm Thông tin – Thư viện - Website: thuvien.huit.edu.vn - Fanpage: www.facebook.com/thuvienHUIT/ (HUIT Library) - Văn phòng: Tầng 2, nhà E, 140 Lê Trọng Tấn, P.
+  Top-3: doc_id=quy-dinh-su-dung-thu-vien chunk=21 score=0.220862
+         - Đối với tài liệu mua, tặng đã cũ không còn lưu hành trên thị trường: - Tài liệu có giá trên bìa: đền tiền gấp 5 lần giá tiền ghi trên bìa đối với tài liệu Việt ngữ; gấp 3 lần giá
+
+Đánh giá kết quả dùng để chấm: gold_rank=None, required_terms_present=False, points=0/2
+
+========================================================================
+Q3: Quy trình đăng ký và sử dụng phòng học nhóm gồm những bước nào, và đến trễ bao lâu thì kết quả đặt phòng bị hủy?
+Gold answer: Đăng ký trực tiếp tại Quầy thông tin hoặc trực tuyến tại mục ĐẶT PHÒNG; nhận kết quả qua email; đến Quầy thông tin Lầu 3 hoặc Lầu 4 làm thủ tục nhận, trả phòng. Kết quả bị hủy nếu đến trễ trên 15 phút.
+Gold document: su-dung-phong-hoc-nhom
+
+[KHÔNG FILTER]
+  Top-1: doc_id=quy-dinh-su-dung-thu-vien chunk=16 score=0.263688
+         Trách nhiệm của cán bộ thư viện: - Khi cho mượn: kiểm tra tình trạng tài liệu trước khi nhập dữ liệu mượn; ghi nhận tình trạng tài liệu trong trường hợp hư hỏng nhẹ như rách trang 
+  Top-2: doc_id=quy-dinh-su-dung-thu-vien chunk=9 score=0.172650
+         - Tiền thế chân được thu ngay khi đăng ký làm thẻ tại thư viện. Việc thu tiền thế chân chỉ áp dụng đối với học sinh, sinh viên, học viên và các tổ chức, cá nhân ngoài trường. Không
+  Top-3: doc_id=huong-dan-su-dung-thu-vien chunk=4 score=0.169646
+         - Đối với người sử dụng trong trường: thẻ giảng viên, viên chức, sinh viên, học viên đồng thời là thẻ thư viện (đơn vị cấp thẻ: phòng Công tác Sinh viên và Thanh tra giáo dục). - Đ
+
+Đánh giá kết quả dùng để chấm: gold_rank=None, required_terms_present=False, points=0/2
+
+========================================================================
+Q4: Dịch vụ mượn liên thư viện cho phép mượn tối đa bao nhiêu tài liệu, trong bao lâu và phí trễ hạn là bao nhiêu?
+Gold answer: Tối đa 2 tài liệu mỗi lần, thời hạn 20 ngày kể từ ngày nhận và phí trễ hạn 5.000 đồng cho mỗi tài liệu mỗi ngày.
+Gold document: muon-lien-thu-vien
+
+[KHÔNG FILTER]
+  Top-1: doc_id=huong-dan-su-dung-thu-vien chunk=10 score=0.209602
+         | Tầng 3 (443 m²) | 7:00 – 19:30 | Không gian học tập chung (188 chỗ ngồi); 04 phòng thảo luận nhóm (7 chỗ ngồi/phòng); phòng thực hành thuyết trình (20 chỗ ngồi); khu vực hội thảo
+  Top-2: doc_id=muon-lien-thu-vien chunk=2 score=0.206868
+         | 6 | Thư viện CĐ Công Thương TP.HCM | https://thuvien.hitu.edu.vn/ | | 7 | Thư viện Đại học Khánh Hòa | https://lib.ukh.edu.vn/ | | 8 | Thư viện Đại học Bình Dương | https://lib.b
+  Top-3: doc_id=huong-dan-su-dung-thu-vien chunk=9 score=0.200669
+         | Tầng 2 (402 m²) | 7:00 – 18:30 | Không gian học tập chung (142 chỗ ngồi); khu hành chính thư viện; kho tài liệu môn học, tạp chí HUIT; thu nhận luận văn, luận án, đề tài NCKH; tủ
+
+Đánh giá kết quả dùng để chấm: gold_rank=2, required_terms_present=False, points=0/2
+
+========================================================================
+Q5: Lệ phí cấp mới, cấp lại, gia hạn thẻ thư viện là bao nhiêu và thời gian trả thẻ được quy định thế nào?
+Gold answer: Cấp mới 100.000 đồng, cấp lại 50.000 đồng, gia hạn 50.000 đồng mỗi năm. Thẻ mới được trả sau khi hoàn thành bài kiểm tra một tuần hoặc theo lịch hẹn; thẻ cấp lại được trả sau 7 ngày kể từ ngày đăng ký.
+Gold document: huong-dan-su-dung-thu-vien
+
+[KHÔNG FILTER]
+  Top-1: doc_id=quy-dinh-su-dung-thu-vien chunk=22 score=0.255075
+         - Chi phí xử lý tài liệu: ngoài việc đền sách theo quy định, người sử dụng phải đóng phí xử lý kỹ thuật (nhãn, dấu, mã vạch) theo quy định. - Các trường hợp miễn, giảm: trong trườn
+  Top-2: doc_id=quy-dinh-su-dung-thu-vien chunk=7 score=0.250638
+         - Thẻ thư viện có giá trị trong suốt thời gian học tập, công tác tại trường và có thời hạn sử dụng trong 1 năm. Người sử dụng phải gia hạn thẻ hàng năm để tiếp tục sử dụng các dịch
+  Top-3: doc_id=huong-dan-su-dung-thu-vien chunk=13 score=0.214454
+         - Tên đơn vị: Trung tâm Thông tin – Thư viện - Website: thuvien.huit.edu.vn - Fanpage: www.facebook.com/thuvienHUIT/ (HUIT Library) - Văn phòng: Tầng 2, nhà E, 140 Lê Trọng Tấn, P.
+
+Đánh giá kết quả dùng để chấm: gold_rank=3, required_terms_present=False, points=0/2
+
+========================================================================
+TỔNG ĐIỂM RETRIEVAL: 0/10
+Lưu ý: MockEmbedder sinh vector từ hash, vì vậy kết quả semantic có thể nhiễu.
+Cần đánh giá lại bằng embedding đa ngữ thật trước khi kết luận chiến lược tốt/xấu.
