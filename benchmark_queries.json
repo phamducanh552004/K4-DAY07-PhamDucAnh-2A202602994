@@ -1,0 +1,62 @@
+{
+  "domain": "Dịch vụ và quy định Thư viện HUIT",
+  "owner_role": "R2 - Benchmark",
+  "queries": [
+    {
+      "id": "Q1_student_borrowing_limit",
+      "query": "Được mượn tối đa bao nhiêu tài liệu và trong bao nhiêu ngày?",
+      "gold_answer": "Đối với sinh viên, học viên: tối đa 3 tài liệu trong 10 ngày.",
+      "gold_doc_id": "han-muc-muon-tai-lieu-sinh-vien",
+      "gold_section": "Hạn mức mượn về nhà",
+      "required_terms": ["3", "10"],
+      "metadata_filter": {
+        "audience": "student"
+      },
+      "ab_test_required": true
+    },
+    {
+      "id": "Q2_borrowing_conditions",
+      "query": "Người sử dụng cần đáp ứng những điều kiện nào để được mượn tài liệu về nhà?",
+      "gold_answer": "Phải hoàn thành bài kiểm tra hướng dẫn sử dụng thư viện đạt 25/35 câu, đăng ký thẻ thư viện và đóng tiền thế chân theo quy định.",
+      "gold_doc_id": "luu-hanh-tai-lieu",
+      "gold_section": "Dịch vụ cho mượn về - Điều kiện sử dụng",
+      "required_terms": ["25/35", "thẻ thư viện", "thế chân"],
+      "metadata_filter": null,
+      "ab_test_required": false
+    },
+    {
+      "id": "Q3_group_room_process",
+      "query": "Quy trình đăng ký và sử dụng phòng học nhóm gồm những bước nào, và đến trễ bao lâu thì kết quả đặt phòng bị hủy?",
+      "gold_answer": "Đăng ký trực tiếp tại Quầy thông tin hoặc trực tuyến tại mục ĐẶT PHÒNG; nhận kết quả qua email; đến Quầy thông tin Lầu 3 hoặc Lầu 4 làm thủ tục nhận, trả phòng. Kết quả bị hủy nếu đến trễ trên 15 phút.",
+      "gold_doc_id": "su-dung-phong-hoc-nhom",
+      "gold_section": "Hướng dẫn sử dụng và Lưu ý",
+      "required_terms": ["ĐẶT PHÒNG", "email", "15 phút"],
+      "metadata_filter": null,
+      "ab_test_required": false
+    },
+    {
+      "id": "Q4_interlibrary_loan",
+      "query": "Dịch vụ mượn liên thư viện cho phép mượn tối đa bao nhiêu tài liệu, trong bao lâu và phí trễ hạn là bao nhiêu?",
+      "gold_answer": "Tối đa 2 tài liệu mỗi lần, thời hạn 20 ngày kể từ ngày nhận và phí trễ hạn 5.000 đồng cho mỗi tài liệu mỗi ngày.",
+      "gold_doc_id": "muon-lien-thu-vien",
+      "gold_section": "Quy định",
+      "required_terms": ["2 tài liệu", "20 ngày", "5.000 đồng"],
+      "metadata_filter": null,
+      "ab_test_required": false
+    },
+    {
+      "id": "Q5_library_card_fees",
+      "query": "Lệ phí cấp mới, cấp lại, gia hạn thẻ thư viện là bao nhiêu và thời gian trả thẻ được quy định thế nào?",
+      "gold_answer": "Cấp mới 100.000 đồng, cấp lại 50.000 đồng, gia hạn 50.000 đồng mỗi năm. Thẻ mới được trả sau khi hoàn thành bài kiểm tra một tuần hoặc theo lịch hẹn; thẻ cấp lại được trả sau 7 ngày kể từ ngày đăng ký.",
+      "gold_doc_id": "huong-dan-su-dung-thu-vien",
+      "gold_section": "Đăng ký làm thẻ",
+      "required_terms": ["100.000", "50.000", "01 tuần", "07 ngày"],
+      "metadata_filter": null,
+      "ab_test_required": false
+    }
+  ],
+  "excluded_gold_fact": {
+    "fact": "Số lần gia hạn tài liệu của sinh viên",
+    "reason": "Hai nguồn trong corpus mâu thuẫn: trang Quy định ghi 1 lần, trang Lưu hành ghi 2 lần."
+  }
+}

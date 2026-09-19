@@ -99,11 +99,11 @@ Chạy `ChunkingStrategyComparator().compare()` trên 2-3 tài liệu:
 
 | # | Câu hỏi (Query) | Câu trả lời chuẩn (Gold Answer) | Chunk nào chứa thông tin? |
 |---|-------|-------------------------------|--------------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 — **CÂU ĐÁNH BẪY** | Được mượn tối đa bao nhiêu tài liệu và trong bao nhiêu ngày? | Sinh viên, học viên được mượn tối đa 3 tài liệu trong 10 ngày. Bắt buộc dùng `metadata_filter={"audience": "student"}`. | `han-muc-muon-tai-lieu-sinh-vien.md` — “Hạn mức mượn về nhà”. Chạy A/B một lần không filter và một lần có filter. |
+| 2 | Người sử dụng cần đáp ứng những điều kiện nào để được mượn tài liệu về nhà? | Hoàn thành bài kiểm tra hướng dẫn sử dụng thư viện đạt 25/35 câu, đăng ký thẻ thư viện và đóng tiền thế chân theo quy định. | `luu-hanh-tai-lieu.md` — “Dịch vụ cho mượn về / Điều kiện sử dụng”. |
+| 3 | Quy trình đăng ký và sử dụng phòng học nhóm gồm những bước nào, và đến trễ bao lâu thì kết quả đặt phòng bị hủy? | Đăng ký tại Quầy thông tin hoặc mục ĐẶT PHÒNG trực tuyến; nhận kết quả qua email; đến Quầy thông tin Lầu 3 hoặc Lầu 4 làm thủ tục. Đến trễ trên 15 phút thì kết quả bị hủy. | `su-dung-phong-hoc-nhom.md` — “Hướng dẫn sử dụng” và “Lưu ý”. |
+| 4 | Dịch vụ mượn liên thư viện cho phép mượn tối đa bao nhiêu tài liệu, trong bao lâu và phí trễ hạn là bao nhiêu? | Tối đa 2 tài liệu/lần, thời hạn 20 ngày từ ngày nhận, phí trễ hạn 5.000 đồng/tài liệu/ngày. | `muon-lien-thu-vien.md` — “Quy định”. |
+| 5 | Lệ phí cấp mới, cấp lại, gia hạn thẻ thư viện là bao nhiêu và thời gian trả thẻ được quy định thế nào? | Cấp mới 100.000 đồng, cấp lại 50.000 đồng, gia hạn 50.000 đồng/năm; thẻ mới trả sau bài kiểm tra 1 tuần hoặc theo lịch hẹn, thẻ cấp lại sau 7 ngày. | `huong-dan-su-dung-thu-vien.md` — “Đăng ký làm thẻ”. |
 
 ### Tổng hợp chất lượng truy xuất của nhóm
 
@@ -118,7 +118,8 @@ Chạy `ChunkingStrategyComparator().compare()` trên 2-3 tài liệu:
 | 5 | | | | |
 
 **Lọc bằng metadata có giúp ích không? Ở câu hỏi nào?**
-> *Viết 2-3 câu:*
+
+Câu 1 được thiết kế để kiểm thử A/B vì query cố ý không nêu đối tượng, trong khi corpus có tài liệu hạn mức gần giống nhau cho sinh viên và giảng viên. Mỗi thành viên phải chạy một lần không filter và một lần với `metadata_filter={"audience": "student"}`; kết luận chỉ được điền sau khi so sánh top-3 thực tế của các chiến lược.
 
 ---
 
